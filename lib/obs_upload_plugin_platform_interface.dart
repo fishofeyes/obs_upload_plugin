@@ -26,4 +26,12 @@ abstract class ObsUploadPluginPlatform extends PlatformInterface {
   Future<String?> getPlatformVersion() {
     throw UnimplementedError('platformVersion() has not been implemented.');
   }
+
+  Future<void> init(String ak, String sk, String endPoint) {
+    throw UnimplementedError('init() has not been implemented.');
+  }
+
+  Stream<Map<String, dynamic>> upload(String path) {
+    throw UnimplementedError('upload() has not been implemented.');
+  }
 }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 
 import 'package:flutter/services.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:obs_upload_plugin/obs_upload_plugin.dart';
 
 void main() {
@@ -31,8 +32,7 @@ class _MyAppState extends State<MyApp> {
     // Platform messages may fail, so we use a try/catch PlatformException.
     // We also handle the message potentially returning null.
     try {
-      platformVersion =
-          await _obsUploadPlugin.getPlatformVersion() ?? 'Unknown platform version';
+      platformVersion = await _obsUploadPlugin.getPlatformVersion() ?? 'Unknown platform version';
     } on PlatformException {
       platformVersion = 'Failed to get platform version.';
     }
@@ -45,12 +45,25 @@ class _MyAppState extends State<MyApp> {
     setState(() {
       _platformVersion = platformVersion;
     });
+    final ak = "";
+    final sk = "";
+    final endPoint = "https://www.baidu.com";
+    _obsUploadPlugin.init(ak, sk, endPoint);
+  }
+
+  void upload() async {
+    final picker = ImagePicker();
+    final xfiles = await picker.pickMultiImage();
+    for (final i in xfiles) {
+      _obsUploadPlugin.upload(i.path);
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
+        floatingActionButton: FloatingActionButton(onPressed: upload),
         appBar: AppBar(
           title: const Text('Plugin example app'),
         ),
